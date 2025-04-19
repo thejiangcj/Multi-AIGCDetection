@@ -1,5 +1,8 @@
 {
     "Openai": {
         "APIKey": "No key"
+    },
+    "Gemini": {
+        "APIKey": "AIzaSyABAiY59RAZiDCPCGXezHp_Y3_w3gIpzfY"
     }
 }

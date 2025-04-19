@@ -1,0 +1,6 @@
+{
+    "DistilPrompt":{
+        "image": "./Prompts/ImageInferWithLabelPrompt.txt",
+        "video": "./Prompts/VideoInferWithLabelPrompt.txt"
+    }
+}

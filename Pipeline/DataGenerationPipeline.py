@@ -28,7 +28,7 @@ class DataGenerationPipeline:
             output_jsonl (str): 输出 JSONL 文件路径。
         """
         # 支持的视频和图片扩展名
-        image_exts = {'.jpg', '.jpeg', '.png', '.bmp', '.gif'}
+        image_exts = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp'}
         video_exts = {'.mp4', '.avi', '.mov', '.mkv'}
 
         output_jsonl = os.path.join(data_path, "data.jsonl")
@@ -38,7 +38,7 @@ class DataGenerationPipeline:
         sft_records = []
 
         # 遍历 Fake 和 Real 文件夹
-        for label in ["Fake", "Real"]:
+        for label in ["fake", "real"]:
             label_dir = os.path.join(data_path, label)
             if not os.path.isdir(label_dir):
                 continue
