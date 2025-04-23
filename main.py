@@ -2,19 +2,19 @@
 Date: 20250402090601
 Description: This script is a project launch interface that starts different tasks depending on the parameter configuration.
 Launch scirpts:
-  - python3.11 main.py -t DataPrediction -tp /Users/arnodjiang/Desktop/AIGCDetection/data/fakecle/fakethread/image/gemini.jsonl -rdp /Users/arnodjiang/Desktop/AIGCDetection/data/fakecle/fakethread -le gemini
+  - python3.11 main.py -t DistilPipeline -tp /Users/arnodjiang/Desktop/AIGCDetection/data/fakecle/fakethread/image/gemini.jsonl -rdp /Users/arnodjiang/Desktop/AIGCDetection/data/fakecle/fakethread -le gemini
 """
 
 import time
 import os
 import argparse
 
-from Pipeline.DataGenerationPipeline import dataGenerationPipeline
-from Pipeline.DataPredictionPipeline import dataPredictionPipeline
+from Pipeline.DistilPipeline import distilPipeline
+
+
 
 _task_map = {
-    "DataGeneration": dataGenerationPipeline.pipeline, # 输入原始数据路径，在目标目录生成 jsonl
-    "DataPrediction": dataPredictionPipeline.generate
+   "DistilPipeline": distilPipeline
 }
 
 def init_args():
@@ -22,7 +22,7 @@ def init_args():
     parser.add_argument('--task', '-t', help='任务参数，包括: 数据生成DataGeneration，测试 Test')
     parser.add_argument('--to_path', '-tp', help='流水文件路径')
     parser.add_argument('--raw_data_path', '-rdp', help='流水文件路径')
-    parser.add_argument('--llm_engine', '-le', help='流水文件路径')
+    parser.add_argument('--llm_engine', '-le', help='大模型，Gemini')
     args = parser.parse_args()
     return args
 

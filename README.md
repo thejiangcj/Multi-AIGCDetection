@@ -1,10 +1,8 @@
-# AIGC Detection
 
-conda activate aigc
+## 环境
 
-## 其他名词
+pip install requirements.txt
 
-- synthetic detection
-- synthetic data detection
-- real-world video surveillance
-- AI-generated video
+配置环境
+
+./Config/LLMsConfig.json 文件夹下的 API
