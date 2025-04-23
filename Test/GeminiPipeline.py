@@ -4,7 +4,7 @@ import re
 import os
 from loguru import logger
 
-api = "" ## 这里写API
+api = "AIzaSyABAiY59RAZiDCPCGXezHp_Y3_w3gIpzfY" ## 这里写API
 
 class Tools:
     @staticmethod
@@ -80,8 +80,8 @@ class GeminiPipeline:
     def __init__(self):
         self.search_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp', 'mp4']
         prompt_config = {
-            "image": "./Prompts/ImageInferWithLabelPrompt.txt",
-            "video": "./Prompts/VideoInferWithLabelPrompt.txt"
+            "image": "/content/drive/MyDrive/Project/AIGC-Detection/Prompts/ImageInferWithLabelPrompt.txt",
+            "video": "/content/drive/MyDrive/Project/AIGC-Detection/Prompts/VideoInferWithLabelPrompt.txt"
         }
         self.client = genai.Client(api_key=api)
 
@@ -94,15 +94,15 @@ class GeminiPipeline:
         }
 
     def infer_with_file(self, file_path, **kwargs):
-        Type = "image" if self.is_image_file(file_path) else "video"
-        Label = kwargs.get("label")
-        system_prompt = self.system_prompt_map[Type]
+        # Type = "image" if self.is_image_file(file_path) else "video"
+        # Label = kwargs.get("label")
+        # system_prompt = self.system_prompt_map[Type]
 
         uploaded_file = self.client.files.upload(file=file_path)
         generate_content_config = types.GenerateContentConfig(
             response_mime_type="text/plain",
             system_instruction=[
-                types.Part.from_text(text=system_prompt),
+                types.Part.from_text(text=kwargs["system_prompt"]),
             ],
         )
         while uploaded_file.state.name == "PROCESSING":
@@ -113,7 +113,7 @@ class GeminiPipeline:
         result = self.client.models.generate_content(
             # model="gemini-2.0-flash", # 2.0 flash thinking
             model="gemini-2.0-flash-thinking-exp-01-21",
-            contents=[uploaded_file, f"This {Type} is {Label}, explain the reason."],
+            contents=[uploaded_file, kwargs["user_prompt"]],
             config=generate_content_config
         )
         return result.text
@@ -148,7 +148,7 @@ class GeminiPipeline:
         image_extensions = {'.mp4'}
         ext = os.path.splitext(filename)[1].lower()
         return ext in image_extensions
-    
+
     def pipeline(self, to_path, raw_data_path, llm_engine="gemini", **kwargs):
         assert to_path.endswith(".jsonl")
 
@@ -217,7 +217,7 @@ class GeminiPipeline:
 
 if __name__ == "__main__":
     gemini = GeminiPipeline()
-    
+
     gemini.pipeline(
         to_path="/content/drive/MyDrive/Project/AIGC-Detection/data/fakethread/image/gemini.jsonl",
         raw_data_path="/content/drive/MyDrive/Project/AIGC-Detection/data/fakethread/image",
