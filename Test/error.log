@@ -1,0 +1,114 @@
+2025-04-29 05:41:55.594 | INFO     | __main__:<cell line: 0>:18 - 正在从 modelscope 下载文件：interpretability/image/train/FakeClue.tar.gz
+2025-04-29 05:41:56,180 - modelscope - INFO - Fetching dataset repo file list...
+Downloading Dataset to directory: /content
+2025-04-29 05:41:57,908 - modelscope - INFO - Got 1 files, start to download ...
+Processing 1 items: 100%
+ 1.00/1.00 [06:46<00:00, 407s/it]
+Downloading [interpretability/image/train/FakeClue.tar.gz]: 100%
+ 13.5G/13.5G [06:46<00:00, 37.2MB/s]
+2025-04-29 05:48:44,496 - modelscope - INFO - Download dataset 'thejiangcj/FakeThread' successfully.
+2025-04-29 05:52:55.591 | INFO     | __main__:pipeline:337 - interpretability/image/train/FakeClue已经处理了0
+2025-04-29 05:52:55.887 | INFO     | __main__:pipeline:347 - 还没有处理的文件为35412，即将开始处理。
+2025-04-29 05:53:32.168 | ERROR    | __main__:pipeline:360 - 处理 interpretability/image/train/FakeClue/satellite/fake/41.89387277,-87.64963066_mbev.jpg 出错: A process in the process pool was terminated abruptly while the future was running or pending.
+ERROR:root:Internal Python error in the inspect module.
+Below is the traceback from this internal error.
+
+concurrent.futures.process._RemoteTraceback: 
+'''
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/concurrent/futures/process.py", line 424, in wait_result_broken_or_wakeup
+    result_item = result_reader.recv()
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/multiprocessing/connection.py", line 251, in recv
+    return _ForkingPickler.loads(buf.getbuffer())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: APIError.__init__() missing 1 required positional argument: 'response_json'
+'''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<ipython-input-3-d9af8683a4ac>", line 358, in pipeline
+    future.result()
+  File "/usr/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/IPython/core/interactiveshell.py", line 3553, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-4-d5734ead9f6b>", line 22, in <cell line: 0>
+    geminiPipeline.pipeline(
+  File "<ipython-input-3-d9af8683a4ac>", line 361, in pipeline
+    sys.exit(1)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/IPython/core/ultratb.py", line 1101, in get_records
+    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/IPython/core/ultratb.py", line 248, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/IPython/core/ultratb.py", line 281, in _fixed_getinnerframes
+    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/inspect.py", line 1739, in getinnerframes
+    traceback_info = getframeinfo(tb, context)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/inspect.py", line 1671, in getframeinfo
+    lineno = frame.f_lineno
+             ^^^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'f_lineno'
+---------------------------------------------------------------------------
+_RemoteTraceback                          Traceback (most recent call last)
+_RemoteTraceback: 
+'''
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/concurrent/futures/process.py", line 424, in wait_result_broken_or_wakeup
+    result_item = result_reader.recv()
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/multiprocessing/connection.py", line 251, in recv
+    return _ForkingPickler.loads(buf.getbuffer())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: APIError.__init__() missing 1 required positional argument: 'response_json'
+'''
+
+The above exception was the direct cause of the following exception:
+
+BrokenProcessPool                         Traceback (most recent call last)
+<ipython-input-3-d9af8683a4ac> in pipeline(self, unzip_path, to_path, **kwargs)
+    357                 try:
+--> 358                     future.result()
+    359                 except Exception as e:
+
+11 frames
+BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.
+
+During handling of the above exception, another exception occurred:
+
+SystemExit                                Traceback (most recent call last)
+    [... skipping hidden 1 frame]
+
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+TypeError                                 Traceback (most recent call last)
+    [... skipping hidden 1 frame]
+
+/usr/local/lib/python3.11/dist-packages/IPython/core/ultratb.py in find_recursion(etype, value, records)
+    380     # first frame (from in to out) that looks different.
+    381     if not is_recursion_error(etype, value, records):
+--> 382         return len(records), 0
+    383 
+    384     # Select filename, lineno, func_name to track frames with
+
+TypeError: object of type 'NoneType' has no len()
