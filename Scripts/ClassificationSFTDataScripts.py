@@ -3,7 +3,7 @@ import json
 
 from loguru import logger
 
-from moviepy.editor import VideoFileClip
+from moviepy import VideoFileClip
 
 ## pip install moviepy imageio loguru
 
@@ -89,14 +89,9 @@ class ClassificationSFTDataScripts:
             _ = [self.convert_gif_to_mp4(i) for i in gif_path]
             logger.info("convert GIF files to MP4 format successfully.")
 
-
-
-
-
-
 if __name__ == "__main__":
     # Example usage
-    data_path = "path/to/your/dataset"
-    to_path = "./sft.json"
+    data_path = "/raid/share/jiangchangjiang/aws/dataset/demamba/train_I2VGEN_XL" # 数据文件夹路径，路径下包含fake或real即可
+    to_path = "./sft.json" # 保存的sft格式的文件路径
     classification_sft_data_scripts = ClassificationSFTDataScripts()
     classification_sft_data_scripts.pipeline(data_path, to_path)
