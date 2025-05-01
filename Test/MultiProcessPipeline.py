@@ -79,15 +79,39 @@ class Tools:
     @staticmethod
     def extract_think_content(text):
         """提取think标签内容（带缓存）"""
-        match = re.search(r'<think>(.*?)</think>', text, re.DOTALL)
-        # text = match.group(1).strip() if match else ''
-        return match.group(1).strip() if match else ''
+        first_think_pos = text.find('<think>')
+        last_think_pos = text.rfind('</think>')
+
+        if first_think_pos != -1 and last_think_pos != -1:
+            # 提取匹配到的内容
+            start = first_think_pos + len('<think>')
+            end = last_think_pos
+            return text[start:end].strip()
+        elif first_think_pos != -1 and last_think_pos == -1 and text.rfind('<conclusion>') !=-1:
+          start = first_think_pos + len('<think>')
+          end = text.rfind('<conclusion>')
+          return text[start:end].strip()
+        return ''
 
     @staticmethod
     def extract_conclusion_content(text):
         """提取conclusion标签内容（带缓存）"""
-        match = re.search(r'<conclusion>(.*?)</conclusion>', text, re.DOTALL)
-        return match.group(1).strip() if match else ''
+        first_think_pos = text.find('<think>')
+        last_think_pos = text.rfind('</think>')
+
+        if first_think_pos != -1 and last_think_pos != -1:
+            # 提取匹配到的内容
+            start = first_think_pos + len('<think>')
+            end = last_think_pos + len("</think>")
+            match = re.search(r'<conclusion>(.*?)</conclusion>', text[end:], re.DOTALL)
+            return match.group(1).strip() if match else ''
+        elif first_think_pos != -1 and last_think_pos == -1 and text.rfind('<conclusion>') !=-1:
+
+          start = first_think_pos + len('<think>')
+          end = text.rfind('<conclusion>')
+          match = re.search(r'<conclusion>(.*?)</conclusion>', text[end:], re.DOTALL)
+          return match.group(1).strip() if match else ''
+        return ''
 
     @staticmethod
     def conclusion_has_single_word(text):
@@ -99,7 +123,31 @@ class Tools:
     def label_vs(text, label):
         """检查conclusion内容是否只有一个单词"""
         # text = Tools.extract_conclusion_content(text)
-        return 1 if text.strip().lower() == label.strip().lower() else 0
+        to_label = 0
+        if text.strip().lower() == label.strip().lower():
+            to_label = 1
+        elif f"is {label}" in text.strip().lower():
+            to_label = 1
+        elif text.strip().startswith(label) or text.strip().endswith(label):
+            to_label = 1
+        elif f"as {label}" in text.strip().lower() or f"as '{label}'" in text.strip().lower():
+            to_label = 1
+        elif "synthetic generation" in text and label=="fake":
+            to_label = 1
+        elif "real capture" in text and label=="real":
+            to_label = 1
+
+        return to_label
+    @staticmethod
+    def deduplicate_by_id(data):
+        seen_ids = set()
+        deduped = []
+        for item in data:
+            item_id = item["rawInfer"]["id"]
+            if item_id not in seen_ids:
+                seen_ids.add(item_id)
+                deduped.append(item)
+        return deduped
 
 class GeminiPipeline:
     def __init__(self):
