@@ -97,6 +97,4 @@ class DataPredictionnPipeline:
                 return False
         return True
 
-        
-
 dataPredictionPipeline = DataPredictionnPipeline()

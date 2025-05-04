@@ -78,3 +78,29 @@
 | loki               | 889  | fake |
 | loki               | 2    | fake |
 | MMFakeBench_test   | 3000 | real |
+
+## 数据生成（SFT）
+
+./Scripts/ClassificationSFTDataScripts.py
+
+## 模型推理
+
+模型推理需要用 sglang 外挂模型，包括微调的模型，外挂的模型在 Config/LLMsConfig.json 中配置。
+
+```python
+./LLMs/OpenaiLLMs.py
+```
+
+查看`./LLMs/OpenaiLLMs.py`文件下的测试数据，其中主要任务为 pipeline 方法，参数为：
+
+- data_path: 包括分类好的数据集文件夹（fake/real）文件夹下
+- to_path: 保存的 json 文件路径
+- task: cls 或者 plausibility
+
+## 评估
+
+### 自动化评估
+
+```python
+./Evaluate/JsonEvaluate.py
+```
