@@ -158,7 +158,7 @@ class ClassificationSFTDataScripts:
 
 if __name__ == "__main__":
     # Example usage
-    data_path = "/raid/share/jiangchangjiang/Multi-AIGCDetection/modelscope_data/classifcation/video/train/classification/video/train/pika" # 数据文件夹路径，路径下包含fake或real即可
-    to_path = "/raid/share/jiangchangjiang/Multi-AIGCDetection/dataset/classification/video/train/pika-train-llava.json" # 保存的sft格式的文件路径
+    data_path = "/raid/share/jiangchangjiang/Multi-AIGCDetection/modelscope_data/classifcation/video/train/" # 数据文件夹路径，路径下包含fake或real即可
+    to_path = "/raid/share/jiangchangjiang/Multi-AIGCDetection/dataset/classification/video/train/demamba-train-llava.json" # 保存的sft格式的文件路径
     classification_sft_data_scripts = ClassificationSFTDataScripts()
     classification_sft_data_scripts.pipeline_parallel(data_path, to_path, data_type="llava")
